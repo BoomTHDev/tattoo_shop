@@ -22,14 +22,13 @@ var (
 func NewPostgresDatabase(conf *config.Database) Database {
 	once.Do(func() {
 		dns := fmt.Sprintf(
-			"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s search_path=%s",
+			"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s TimeZone=Asia/Bangkok",
 			conf.Host,
 			conf.User,
 			conf.Password,
 			conf.DBName,
 			conf.Port,
 			conf.SSLMode,
-			conf.Schema,
 		)
 
 		conn, err := gorm.Open(postgres.Open(dns), &gorm.Config{})

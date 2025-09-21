@@ -32,7 +32,6 @@ type (
 		Password string `validate:"required"`
 		DBName   string `validate:"required"`
 		SSLMode  string `validate:"required"`
-		Schema   string `validate:"required"`
 	}
 )
 
@@ -84,7 +83,6 @@ func ConfigGetting() *Config {
 			Password: getEnv("DB_PASSWORD", ""),
 			DBName:   getEnv("DB_NAME", ""),
 			SSLMode:  getEnv("DB_SSL_MODE", "disable"),
-			Schema:   getEnv("DB_SCHEMA", "public"),
 		}
 	})
 
