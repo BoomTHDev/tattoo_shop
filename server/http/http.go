@@ -8,6 +8,7 @@ import (
 
 	"github.com/BoomTHDev/tattoo_port/config"
 	"github.com/BoomTHDev/tattoo_port/databases"
+	"github.com/BoomTHDev/tattoo_port/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -26,8 +27,9 @@ var (
 
 func NewFiberServer(conf *config.Config, db databases.Database) *fiberServer {
 	fiberApp := fiber.New(fiber.Config{
-		BodyLimit:   conf.Server.BodyLimit,
-		IdleTimeout: time.Second * time.Duration(conf.Server.TimeOut),
+		BodyLimit:    conf.Server.BodyLimit,
+		IdleTimeout:  time.Second * time.Duration(conf.Server.TimeOut),
+		ErrorHandler: middleware.ErrorHandler(),
 	})
 
 	once.Do(func() {
@@ -48,6 +50,8 @@ func (h *fiberServer) setupRoutes() {
 		AllowMethods: "GET, POST, PUT, DELETE",
 		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 	}))
+
+	h.initTattooRouter()
 
 	h.app.Get("/health-check", h.healthCheck)
 	h.app.Use(func(ctx *fiber.Ctx) error {

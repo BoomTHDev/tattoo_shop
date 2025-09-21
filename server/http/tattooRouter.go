@@ -7,9 +7,9 @@ import (
 )
 
 func (h *fiberServer) initTattooRouter() {
-	// tattooRepository := _tattooRepositoy.NewTattooRepositoryImpl(h.db)
-	tattooRepositoryMock := _tattooRepositoy.NewTattooRepositoryMockWithSeed()
-	tattooService := _tattooService.NewTattooServiceImpl(tattooRepositoryMock)
+	tattooRepository := _tattooRepositoy.NewTattooRepositoryImpl(h.db)
+	// tattooRepositoryMock := _tattooRepositoy.NewTattooRepositoryMockWithSeed()
+	tattooService := _tattooService.NewTattooServiceImpl(tattooRepository)
 	tattooController := _tattooController.NewTatttooController(tattooService)
 
 	tattooRouter := h.app.Group("/v1/tattoos")
