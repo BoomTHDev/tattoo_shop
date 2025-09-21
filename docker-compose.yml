@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:alpine
+    container_name: tattoo_port_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tattoo_port
+    ports:
+      - '5432:5432'
+    volumes:
+      - tattoo_port_db_data:/var/lib/postgresql/data
+    networks:
+      - tattoo_port_db
+
+volumes:
+  tattoo_port_db_data:
+
+networks:
+  tattoo_port_db:
+    driver: bridge
